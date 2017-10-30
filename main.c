@@ -6,37 +6,41 @@
 #include "lista.h"
 
 /******** Funcion: main ********************
-Descripcion: Crea los jugadores, sus mazos y ejecuta los turnos hasta que alguien 
+Descripcion: Crea los jugadores, sus mazos y ejecuta los turnos hasta que alguien
 gane o se acaben  las cartas. Finalmente libera memoria.
 Parametros: No recibe parametros.
 Retorno: Retorna el int 0;
-************************************************/ 
+************************************************/
 
 int main(){
-	
-	Sansano *CPU, *player;
-	CartaCurso *aux;
 
+	tLista *Mazo;
+	Carta *aux;
 	int comando;
 	int flag;
 	int turno;
 	int pos_Carta;
 	int cant_cartas;
 	int com;
-	
+	int i;
 	flag	= 1;
 	turno 	= 1;
 	cant_cartas =0;
+	Mazo = iniLista();
 	//comando = 0;
-	
+
 	char nombre[50];
-	CPU = const_Player("Maquinola");
-	
-	srand(time(NULL));
-	printf("Ingrese su nombre:[maximo 50 caracteres]\n");
-	scanf("%s", nombre);
-	player = const_Player(nombre);
-	
+	Mazo = crear_mazo();
+	for (i = 0; i < 54; i++) {
+		movePos(Mazo, i);
+		aux = ((Carta*)Mazo->curr->sig->carta);
+		printf("Has sacado la carta %s %s\n", aux->numero, aux->color);
+	}
+	//srand(time(NULL));
+	//printf("Ingrese su nombre:[maximo 50 caracteres]\n");
+	//scanf("%s", nombre);
+	//player = const_Player(nombre);
+/*
 	while(flag == 1){
 		comando = 0;
 		if (turno%2 == 1){
@@ -45,15 +49,15 @@ int main(){
 				}
 			pos_Carta = (rand())%6;
 			movePos((tLista*)player->mazo, pos_Carta);
-			aux = ((CartaCurso*)((tLista*)(player->mazo))->curr->sig->carta);
+			aux = ((Carta*)((tLista*)(player->mazo))->curr->sig->carta) ;
 			while(aux->cantidad == 0){
-				
+
 				pos_Carta = (rand()+1)%6;
 				movePos((tLista*)player->mazo, pos_Carta);
-				aux = ((CartaCurso*)((tLista*)(player->mazo))->curr->sig->carta);
+				aux = ((Carta*)((tLista*)(player->mazo))->curr->sig->carta);
 			}
-			
-			printf("Has sacado la carta %s. Descripcion: %s\n", aux->nombre, aux->descripcion);
+
+			printf("Has sacado la carta %s. Descripcion: %s\n", aux->numero, aux->color);
 			printf("-----------------------------------------------------------------------\n");
 			printf("Prioridad actual:%d\t Prioridad enemiga: %d\n", player->prioridad, CPU->prioridad);
 			printf("-Para curarte presiona 1\n-Para atacar presiona 2\n");
@@ -62,19 +66,19 @@ int main(){
 				printf("Ingresa una opcion valida\n");
 				scanf("%d", &comando);
 			}
-			
+
 			printf("-----------------------------------------------------------------------\n");
 			if (comando == 1){
-				aux->aprobar(aux, player);
+				//aux->aprobar(aux, player);
 				printf("Tu prioridad actual:%d\n",player->prioridad);
 				printf("-----------------------------------------------------------------------\n");
 				turno+=1;
 				cant_cartas +=1;
-				
+
 			}
 			else if (comando == 2){
 				//printf("Prioridad enemiga:%d", CPU->prioridad);
-				aux->reprobar(aux, CPU);
+				//aux->reprobar(aux, CPU);
 				printf("Prioridad enemiga:%d\n", CPU->prioridad);
 				turno+=1;
 				cant_cartas +=1;
@@ -102,19 +106,19 @@ int main(){
 				}
 			pos_Carta = (rand())%6;
 			movePos((tLista*)CPU->mazo, pos_Carta);
-			aux = ((CartaCurso*)((tLista*)(CPU->mazo))->curr->sig->carta);
+			aux = ((Carta*)((tLista*)(CPU->mazo))->curr->sig->carta);
 			while(aux->cantidad == 0){
 				pos_Carta = (rand()+1)%6;
 				movePos((tLista*)CPU->mazo, pos_Carta);
-				aux = ((CartaCurso*)((tLista*)(CPU->mazo))->curr->sig->carta);
-				
+				aux = ((Carta*)((tLista*)(CPU->mazo))->curr->sig->carta);
+
 			}
 			printf("turno enemigo\n");
 			if(CPU->prioridad > 1500){
-				
-				aux->reprobar(aux,player);
+
+				//aux->reprobar(aux,player);
 				cant_cartas +=1;
-				printf("Te ha atacado con %s. Tu prioridad es: %d\n",aux->nombre, player->prioridad);
+				printf("Te ha atacado con %s. Tu prioridad es: %d\n",aux->numero, player->prioridad);
 				turno+=1;
 				printf("-----------------------------------------------------------------------\n");
 				if(player->prioridad <= 0){
@@ -132,18 +136,18 @@ int main(){
 					free((void*)player);
 					free((void*)CPU);
 					exit(1);
-					
+
 				}
 			}
 			else{
-				aux->aprobar(aux,CPU);
-				printf("Se ha curado con %s. Su prioridad es: %d\n", aux->nombre, CPU->prioridad);
+				//aux->aprobar(aux,CPU);
+				printf("Se ha curado con %s. Su prioridad es: %d\n", aux->numero, CPU->prioridad);
 				turno+=1;
 				printf("-----------------------------------------------------------------------\n");
 				cant_cartas +=1;
-				
+
 			}
-		}	
+		}
 		}
 	if(player->prioridad > CPU->prioridad){
 		printf("Se han acabado las cartas. Has Ganado!!! Felicitaciones!!!\n");
@@ -165,5 +169,5 @@ int main(){
 	free((void*)player);
 	free((void*)CPU);
 	return 0;
-		
+*/
 }

@@ -3,19 +3,10 @@
 
 
 typedef struct Curso{
-char *nombre, *descripcion;
-int ataque, defensa, cantidad;
-void (*reprobar)(void* , void* ); //Los parametros son la carta y el enemigo
-void (*aprobar)(void* , void* ); //Los parametros son la carta y el jugador
-}CartaCurso;
+char *numero, *color;
+int cantidad;
+}Carta;
 
-void usarAprobar(void* , void* );
-
-void usarReprobar(void* , void* );
-
-CartaCurso *const_carta(char *, char *, int , int , int );
-
-
-
+Carta *const_carta(char *, char *, int);
 
 #endif
