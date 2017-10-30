@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "lista.h"
 #include "CartaCurso.h"
 
 /******** Funcion: iniLista ********************
 Descripcion: inicializa y construye una lista enlazada.
-Parametros: 
+Parametros:
 No recibe parametros
 Retorno: Retorna la lista ya inicializada
 ************************************************/
@@ -22,7 +23,7 @@ tLista* iniLista(){
 
 /******** Funcion: len ********************
 Descripcion: Revisa el largo de una lista enlazada
-Parametros: 
+Parametros:
 tLista* lista: Lista enlazada.
 Retorno: Retorna el largo de la lista.
 ************************************************/
@@ -33,7 +34,7 @@ int len(tLista* lista){
 
 /******** Funcion: pos ********************
 Descripcion: Revisa la posicion actual en la lista enlazada
-Parametros: 
+Parametros:
 tLista* lista: Lista enlazada.
 Retorno: Retorna la posicion de la lista
 ************************************************/
@@ -44,13 +45,13 @@ int pos(tLista* lista){
 
 /******** Funcion: insertar********************
 Descripcion: inserta un nodo dentro de la lista enlazada.
-Parametros: 
+Parametros:
 tLista* lista: Lista enlazada.
 void* carta1: Informacion que a almacenar en el nodo.
 Retorno: retorna el largo de la lista luego de la insercion.
 ************************************************/
 
-	
+
 int insertar(tLista* list, void* carta1){
 	list->head = list->curr;
 	tNodo *aux = list->curr->sig;
@@ -63,7 +64,7 @@ int insertar(tLista* list, void* carta1){
 }
 /******** Funcion: movePos ********************
 Descripcion: Se mueve a una posicion arbitraria dentro de la lista.
-Parametros: 
+Parametros:
 tLista* lista: Lista enlazada.
 int pos: Posicion a la que se movera.
 Retorno: No retorna.
@@ -85,7 +86,7 @@ void movePos(tLista* lista,  int pos){
 }
 /******** Funcion: lista_free ********************
 Descripcion: Libera la memoria de la lista y de las cartas presentes en la lista.
-Parametros: 
+Parametros:
 tNodo* node: Primer nodo de la lista.
 Retorno: No retorna.
 ************************************************/
@@ -102,32 +103,58 @@ void lista_free(tNodo* node){
 
 /******** Funcion: crear_mazo ********************
 Descripcion: Crea un mazo de cartas, basado en una lista enlazada.
-Parametros: 
+Parametros:
 No tiene parametros
-Retorno: Retorna la lista enlazada donde se encuentra el mazo. 
+Retorno: Retorna la lista enlazada donde se encuentra el mazo.
 ************************************************/
 
 tLista *crear_mazo(){
 	tLista *mazo;
-	CartaCurso *progra, *mate, *fisica, *lp, *edd, *ed; 
+	int i, j;
+  char carta[2];
 	mazo = iniLista();
-	progra = const_carta("Programacion"," Ataca 110/Cura 300 puntos de prioridad. Cantidad: 6 ", 110, 300,6);
-	mate = const_carta("Matematicas", " Ataca 550/Cura 200 puntos de prioridad. Cantidad: 1 ", 550, 200, 1);
-	fisica = const_carta("Fisica", " Ataca 450/Cura 150 puntos de prioridad. Cantidad: 4", 450, 150, 4);
-	lp = const_carta("LP", "Ataca 510/Cura 180 puntos de prioridad. Cantidad: 2", 510, 180, 2);
-	edd = const_carta("EDD", " Ataca 430/Cura 120 puntos de prioridad. Cantidad: 4", 430, 120, 4);
-	ed = const_carta("ED", " Ataca 470/Cura 160 puntos de prioridad. Cantidad: 3", 470, 160, 3);
-	
-	insertar(mazo, progra);
-	insertar(mazo, mate);
-	insertar(mazo, fisica);
-	insertar(mazo, lp);
-	insertar(mazo, edd);
-	insertar(mazo, ed);
-	
+	for (i = 0; i < 15; i++) {
+    if (i == 0) {
+			insertar(mazo, const_carta("0", "Rojo", 1) );
+			insertar(mazo, const_carta("0", "Verde", 1) );
+			insertar(mazo, const_carta("0", "Azul", 1) );
+			insertar(mazo, const_carta("0", "Amarillo", 1) );
+      continue;
+    }
+    else if (i == 10) {
+      strcpy(carta,"+2");
+    }
+    else if (i == 11) {
+      strcpy(carta,"re");
+    }
+    else if (i == 12) {
+      strcpy(carta,"sa");
+    }
+		else if (i == 13) {
+			insertar(mazo, const_carta("Color", "Negro", 4) );
+			continue;
+		}
+		else if (i == 14) {
+			insertar(mazo, const_carta("+4", "Negro", 4) );
+			continue;
+		}
+    else {
+      sprintf(carta, "%d", i);
+    }
+    for (j = 0; j < 4; j++) {
+      if (j == 0) {
+        insertar(mazo, const_carta(carta, "Rojo", 2) );
+      }
+      else if (j == 1) {
+        insertar(mazo, const_carta(carta, "Verde", 2) );
+      }
+      else if (j == 2) {
+        insertar(mazo, const_carta(carta, "Azul", 2) );
+      }
+      else{
+        insertar(mazo, const_carta(carta, "Amarillo", 2) );
+      }
+    }
+  }
 	return mazo;
 }
-
-
-	
-	
