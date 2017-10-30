@@ -5,4 +5,4 @@ María Apolo Uribe 201573509-3
 
 Instrucciones de compilacion: 
 
-Compilar con "make juego".
+Compilar con "make juego"
