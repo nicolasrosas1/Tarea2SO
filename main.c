@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <sys/types.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <unistd.h>
+#include <sys/wait.h>
 #include "Sansano.h"
 #include "CartaCurso.h"
 #include "lista.h"
@@ -15,7 +20,7 @@ Retorno: Retorna el int 0;
 int main(){
 
 	tLista *Mazo;
-	Carta *aux;
+	Carta *aux, *data, *backup;
 	int comando;
 	int flag;
 	int turno;
@@ -23,6 +28,8 @@ int main(){
 	int cant_cartas;
 	int com;
 	int i;
+	int shmid;
+	int pid;
 	flag	= 1;
 	turno 	= 1;
 	cant_cartas =0;
@@ -31,11 +38,35 @@ int main(){
 
 	char nombre[50];
 	Mazo = crear_mazo();
-	for (i = 0; i < 54; i++) {
-		movePos(Mazo, i);
-		aux = ((Carta*)Mazo->curr->sig->carta);
-		printf("Has sacado la carta %s %s\n", aux->numero, aux->color);
+	// for (i = 0; i < 54; i++) {
+	// 	movePos(Mazo, i);
+	// 	aux = ((Carta*)Mazo->curr->sig->carta);
+	// 	printf("Has sacado la carta %s %s\n", aux->numero, aux->color);
+	// }
+
+	pid = fork();
+	if (pid == 0) {
+		printf("Has sacado la carta %s %s %d\n", ((Carta*)Mazo->curr->sig->carta)->numero, ((Carta*)Mazo->curr->sig->carta)->color, ((Carta*)Mazo->curr->sig->carta)->cantidad );
+		((Carta*)Mazo->curr->sig->carta)->cantidad = ((Carta*)Mazo->curr->sig->carta)->cantidad -1;
 	}
+	else{
+		wait(NULL);
+		printf("Has sacado la carta %s %s %d\n", ((Carta*)Mazo->curr->sig->carta)->numero, ((Carta*)Mazo->curr->sig->carta)->color, ((Carta*)Mazo->curr->sig->carta)->cantidad );
+	}
+	// if ((shmid = shmget(10, 54*sizeof(Carta), 0644 | IPC_CREAT)) == -1) {
+  //   perror("shmget");
+  //   exit(1);
+  // }
+	// data = (tNodo *) shmat(shmid, (void *)0, 0);
+	//
+	// for (i = 0; i < 54; i++) {
+	// 	movePos(Mazo, i);
+	// 	aux = (tNodo*)Mazo->curr;
+	// 	*(data++) = *aux;
+	// 	printf("%s\n", ((Carta *)data->sig->carta)->numero);
+	// }
+	//printf("%s\n", (data++)->numero);
+
 	//srand(time(NULL));
 	//printf("Ingrese su nombre:[maximo 50 caracteres]\n");
 	//scanf("%s", nombre);

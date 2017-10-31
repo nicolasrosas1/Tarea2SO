@@ -12,9 +12,11 @@ Retorno: Retorna la lista ya inicializada
 ************************************************/
 
 
+
+
 tLista* iniLista(){
-	tLista *aux = (tLista*)malloc(sizeof(tLista));
-	aux->curr = aux->head = (tNodo*)malloc(sizeof(tNodo));
+	tLista *aux = (tLista*)my_malloc(sizeof(tLista));
+	aux->curr = aux->head = (tNodo*)my_malloc(sizeof(tNodo));
 	aux->curr->sig = NULL;
 	aux->pos = 0;
 	aux->size = 0;
@@ -55,7 +57,7 @@ Retorno: retorna el largo de la lista luego de la insercion.
 int insertar(tLista* list, void* carta1){
 	list->head = list->curr;
 	tNodo *aux = list->curr->sig;
-	list->curr->sig = (tNodo *)malloc(sizeof(tNodo));
+	list->curr->sig = (tNodo *)my_malloc(sizeof(tNodo));
 	list->curr->sig->carta = carta1;
 	list->curr->sig->sig = aux;
 

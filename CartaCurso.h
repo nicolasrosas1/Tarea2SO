@@ -7,6 +7,8 @@ char *numero, *color;
 int cantidad;
 }Carta;
 
+void *  my_malloc(int size);
+
 Carta *const_carta(char *, char *, int);
 
 #endif

@@ -5,7 +5,7 @@ typedef struct nodo{
 	void *carta;
 	struct nodo *sig;
 }tNodo;
-	
+
 
 typedef struct lista{
 	tNodo *head;
@@ -13,6 +13,8 @@ typedef struct lista{
 	int size;
 	int pos;
 }tLista;
+
+void *  my_malloc(int);
 
 tLista *iniLista();
 
